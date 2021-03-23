@@ -56,7 +56,7 @@ const AddExpenseComponent = () => {
           Select Your Date:{' '}
           <Text style={styles.dateTimeInside}>
             {showScreen
-              ? moment.unix(timeStamp).format('M/D/YYYY') +
+              ? moment.unix(timeStamp).format('D/M/YYYY') +
                 ' ' +
                 moment.unix(timeStamp).format('h:mm A')
               : null}
