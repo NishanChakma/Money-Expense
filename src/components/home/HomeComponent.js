@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
 const HomeComponent = () => {
+  const navigation = useNavigation();
+  const onPressHandle = useCallback(() => {
+    navigation.navigate('Add Expense');
+  }, [navigation]);
   return (
     <>
       <View style={styles.homeContainer}>
@@ -30,7 +35,7 @@ const HomeComponent = () => {
         <View style={styles.hr}></View>
         {/* .............button----------- */}
         <View style={styles.expenseButton}>
-          <TouchableOpacity onPress={null}>
+          <TouchableOpacity onPress={onPressHandle}>
             <Text style={styles.button}>Add Expense</Text>
           </TouchableOpacity>
         </View>
