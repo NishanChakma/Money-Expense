@@ -15,7 +15,7 @@ const Layout = () => {
           source={require('../utills/images/drawer.png')}
         />
       </TouchableOpacity>
-      <Text style={styles.text}>Money Expense</Text>
+      <Text style={styles.text}>Expense Tracker</Text>
     </View>
   );
 };
