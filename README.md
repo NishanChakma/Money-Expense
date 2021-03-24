@@ -1,12 +1,10 @@
 # Money-Expense
 
 #Feature:
-
 User can input daily expense
-
 Show all expense
-
 Filter expense by date
+
 
 #Uses Technology:
 
