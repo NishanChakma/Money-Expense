@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import styles from './styles';
 import {connect} from 'react-redux';
@@ -8,11 +8,9 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 
 const AllExpenseComponent = props => {
-  const data = props.Expense ? props.Expense : [];
+  const [data, setNewData] = useState(props.Expense);
   const key = () => uuidv4();
   const renderItem = useCallback(({item}) => <Items item={item} />, [data]);
-  //filter task will be in here
-
   // -------------------date time start-------------
   const [startTimeStamp, setstartTimeStamp] = useState(0);
   const [endTimeStamp, setEndTimeStamp] = useState(0);
@@ -36,6 +34,17 @@ const AllExpenseComponent = props => {
 
   // -------------------date time end-------------
 
+  //filter task is in here
+  const filterData = () => {
+    if (startTimeStamp != 0 && endTimeStamp != 0) {
+      let newData = props.Expense.filter(res => {
+        if (res.timeStamp > startTimeStamp && endTimeStamp > res.timeStamp) {
+          return res;
+        }
+      });
+      setNewData(newData);
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.selectBox}>
@@ -57,7 +66,17 @@ const AllExpenseComponent = props => {
               : 'Select End Date'}
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.selectBoxInsideSmall}
+          onPress={filterData}>
+          <Text style={[styles.text, {backgroundColor: '#e60000'}]}>
+            Filter
+          </Text>
+        </TouchableOpacity>
       </View>
+      {data.length === 0 && (
+        <Text style={styles.noData}>No data between these days</Text>
+      )}
       <FlatList
         showsVerticalScrollIndicator={false}
         data={data}

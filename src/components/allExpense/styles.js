@@ -12,7 +12,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   selectBoxInside: {
-    width: '50%',
+    width: '40%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  selectBoxInsideSmall: {
+    width: '20%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -25,6 +30,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
     color: '#fff',
+  },
+  noData: {
+    fontSize: 18,
+    color: 'red',
+    textAlign: 'center',
+    top: 150,
   },
 });
 export default styles;
