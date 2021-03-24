@@ -1,9 +1,15 @@
 # Money-Expense
 
 #Feature:
+
 User can input daily expense
+
 Show all expense
+
 Filter expense by date
+
+
+
 
 
 #Uses Technology:
@@ -19,6 +25,10 @@ redux persist to save data in localstorage and not to use multiple key to save d
 Splash Screen
 
 Project Icon
+
+
+
+
 
 #Future Plan:
 
