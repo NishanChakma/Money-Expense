@@ -37,5 +37,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     top: 150,
   },
+  button: {
+    position: 'absolute',
+    bottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  reset: {
+    backgroundColor: 'red',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+    textAlign: 'center',
+    color: '#fff',
+  },
 });
 export default styles;

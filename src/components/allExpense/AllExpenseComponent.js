@@ -51,6 +51,17 @@ const AllExpenseComponent = props => {
     }
   };
 
+  //reset all
+  const resetAll = useCallback(() => {
+    setNewData(props.Expense);
+    setstartTimeStamp(0);
+    setEndTimeStamp(0);
+    setSetBox(0);
+    setDate(new Date());
+    setMode(0);
+    setShow(false);
+  }, [data, startTimeStamp, endTimeStamp, selectBox, date, mode, show]);
+
   return (
     <View style={styles.container}>
       <View style={styles.selectBox}>
@@ -75,9 +86,7 @@ const AllExpenseComponent = props => {
         <TouchableOpacity
           style={styles.selectBoxInsideSmall}
           onPress={filterData}>
-          <Text style={[styles.text, {backgroundColor: '#e60000'}]}>
-            Filter
-          </Text>
+          <Text style={styles.text}>Filter</Text>
         </TouchableOpacity>
       </View>
       {data.length === 0 && (
@@ -89,6 +98,10 @@ const AllExpenseComponent = props => {
         renderItem={renderItem}
         keyExtractor={key}
       />
+
+      <TouchableOpacity onPress={resetAll} style={styles.button}>
+        <Text style={styles.reset}>Reset</Text>
+      </TouchableOpacity>
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
