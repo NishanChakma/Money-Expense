@@ -9,7 +9,7 @@ import styles from './styles';
 const HomeComponent = props => {
   let StoreData = props.Expense;
   // const [data, setData] = useState(StoreData);
-  const randomKey = uuidv4();
+  const key = () => uuidv4();
   const navigation = useNavigation();
   const onPressHandle = useCallback(() => {
     navigation.navigate('Add Expense');
@@ -44,7 +44,7 @@ const HomeComponent = props => {
         showsVerticalScrollIndicator={false}
         data={StoreData}
         renderItem={renderItem}
-        keyExtractor={() => randomKey}
+        keyExtractor={key}
       />
       {/* <TouchableOpacity style={styles.viewMoreContainer} onPress={null}>
         <Text style={styles.viewMore}>View More</Text>
