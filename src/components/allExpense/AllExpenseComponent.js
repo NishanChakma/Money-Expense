@@ -86,7 +86,7 @@ const AllExpenseComponent = props => {
         <TouchableOpacity
           style={styles.selectBoxInsideSmall}
           onPress={filterData}>
-          <Text style={styles.text}>Filter</Text>
+          <Text style={[styles.text, {backgroundColor: 'red'}]}>Filter</Text>
         </TouchableOpacity>
       </View>
       {data.length === 0 && (

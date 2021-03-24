@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   reset: {
-    backgroundColor: 'red',
+    backgroundColor: '#cc0202',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 10,
