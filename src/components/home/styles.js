@@ -24,23 +24,21 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   expenseButton: {
-    marginTop: 20,
-    textAlign: 'center',
-    display: 'flex',
-    alignItems: 'center',
-    alignContent: 'center',
+    marginHorizontal: '20%',
+    width: '60%',
+    marginVertical: 20,
   },
   button: {
-    backgroundColor: '#FF0000',
-    paddingHorizontal: 20,
     paddingVertical: 10,
+    backgroundColor: 'red',
+    textAlign: 'center',
     borderRadius: 10,
   },
 
   expense: {
     flexDirection: 'row',
     width: '90%',
-    height: 80,
+    height: 75,
     marginHorizontal: '5%',
   },
   circle: {
@@ -58,6 +56,7 @@ const styles = StyleSheet.create({
   },
   rent: {
     fontSize: 18,
+    color: '#000',
   },
   amount: {
     fontSize: 12,
@@ -66,6 +65,13 @@ const styles = StyleSheet.create({
     width: '25%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  viewMoreContainer: {
+    alignItems: 'flex-end',
+    marginRight: 20,
+  },
+  viewMore: {
+    textDecorationLine: 'underline',
   },
 });
 

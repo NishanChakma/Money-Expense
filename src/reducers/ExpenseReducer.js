@@ -17,7 +17,7 @@ const ExpenseReducer = (state = initialState, action) => {
     case actionType.ADD_TRANSECTION:
       return {
         ...state,
-        expense: action.param,
+        expense: action.params,
         loading: false,
       };
     default: {

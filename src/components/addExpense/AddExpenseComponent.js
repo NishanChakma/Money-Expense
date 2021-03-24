@@ -1,17 +1,29 @@
-import React, {useState} from 'react';
-import {View, Text, TextInput, Platform, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Platform,
+  TouchableOpacity,
+  ToastAndroid,
+} from 'react-native';
+import React, {useState, useCallback} from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from './styles';
 import moment from 'moment';
-const AddExpenseComponent = () => {
-  const [value, setvalue] = useState('');
-  const [price, setPrice] = useState('');
+import {totalAmount, addTransection} from '../../actions/ExpenseActions';
+import {connect} from 'react-redux';
+// import Loader from '../Loader';
+import {useNavigation} from '@react-navigation/native';
 
+const AddExpenseComponent = props => {
+  const navigation = useNavigation();
+  const [value, setvalue] = useState(''); //category
+  const [price, setPrice] = useState(''); //price
   // -------------------date time start-------------
-  const [showScreen, setShowScreen] = useState(false);
-  const [timeStamp, setTimeStamp] = useState(0);
+  const [showScreen, setShowScreen] = useState(false); //show date time
+  const [timeStamp, setTimeStamp] = useState(0); //timeStamp
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState(0);
   const [show, setShow] = useState(false);
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate ? selectedDate : date;
@@ -19,17 +31,42 @@ const AddExpenseComponent = () => {
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
     setTimeStamp(timestamp);
-    setShowScreen(true);
+    setShowScreen(selectedDate === undefined ? false : true);
   };
   const showMode = currentMode => {
     setShow(true);
     setMode(currentMode);
-    // setShowScreen(false);
   };
   const showDatepicker = () => {
     showMode('date');
   };
   // -------------------date time end-------------
+  const submitData = useCallback(async () => {
+    if (
+      timeStamp === 0 ||
+      value.length === 0 ||
+      price.length === 0 ||
+      !showScreen
+    ) {
+      ToastAndroid.show(
+        'Invalid Data! Please input the correct data.',
+        ToastAndroid.SHORT,
+      );
+      return;
+    } else {
+      const newPrice = parseInt(price);
+      const finalExpense = props.TotalAmount + newPrice;
+      const expenseArray = {
+        category: value,
+        expense: price,
+        timeStamp: timeStamp,
+      };
+      const newTransection = [...props.Expense, expenseArray];
+      await props.dispatch(totalAmount(finalExpense)); //<-----------------check
+      await props.dispatch(addTransection(newTransection)); //<------------check
+      navigation.navigate('Home');
+    }
+  }, [timeStamp, value, price, showScreen, props.TotalAmount, props.Expense]);
 
   return (
     <>
@@ -55,15 +92,11 @@ const AddExpenseComponent = () => {
         <Text style={styles.dateTime}>
           Select Your Date:{' '}
           <Text style={styles.dateTimeInside}>
-            {showScreen
-              ? moment.unix(timeStamp).format('D/M/YYYY') +
-                ' ' +
-                moment.unix(timeStamp).format('h:mm A')
-              : null}
+            {showScreen ? moment.unix(timeStamp).format('D/M/YYYY') : null}
           </Text>
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={null} style={styles.submit}>
+      <TouchableOpacity onPress={submitData} style={styles.submit}>
         <Text style={styles.submitText}>Add Transection</Text>
       </TouchableOpacity>
       {show && (
@@ -80,4 +113,15 @@ const AddExpenseComponent = () => {
   );
 };
 
-export default AddExpenseComponent;
+const mapStateToProps = state => {
+  const TotalAmount = state.ExpenseReducer.totalAmount;
+  const Expense = state.ExpenseReducer.expense;
+  const Loading = state.ExpenseReducer.loading;
+  return {
+    TotalAmount,
+    Expense,
+    Loading,
+  };
+};
+
+export default connect(mapStateToProps)(AddExpenseComponent);

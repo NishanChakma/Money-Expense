@@ -1,14 +1,15 @@
 import actionType from '../constants';
 
-export const totalAmount = () => {
+export const totalAmount = param => {
   return {
     type: actionType.TOTAL_AMOUNT,
+    param: param,
   };
 };
 
-export const addTransection = param => {
+export const addTransection = params => {
   return {
     type: actionType.ADD_TRANSECTION,
-    param,
+    params: params,
   };
 };

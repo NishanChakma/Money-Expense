@@ -3,25 +3,22 @@ import actionType from '../../constants';
 
 export const totalAmount = function* (action) {
   try {
-    let totalAmount = 50;
-    yield put({
+    // yield put //<-----------------check
+    ({
       type: actionType.TOTAL_AMOUNT,
-      param: totalAmount,
+      param: action.param,
     });
   } catch (error) {
     console.log('Total amount not found', error);
   }
 };
 
-export const addTransection = function* (param) {
+export const addTransection = function* (action) {
   try {
-    let newTransection = {
-      date: 34654,
-      amount: 50,
-    };
-    yield put({
-      type: actionType.TOTAL_AMOUNT,
-      param: newTransection,
+    // yield put //<-----------------check
+    ({
+      type: actionType.ADD_TRANSECTION,
+      param: action.params,
     });
   } catch (error) {
     console.log('New expense is not added', error);

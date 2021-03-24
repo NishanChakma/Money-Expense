@@ -3,6 +3,8 @@ import {combineReducers} from 'redux';
 //import all reducers here...
 import ExpenseReducer from './ExpenseReducer';
 
-export default combineReducers({
+const rootReducer = combineReducers({
   ExpenseReducer,
 });
+
+export default rootReducer;

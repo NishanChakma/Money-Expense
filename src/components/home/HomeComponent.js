@@ -1,47 +1,69 @@
-import React, {useCallback} from 'react';
-import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity, FlatList, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {connect} from 'react-redux';
+import {v4 as uuidv4} from 'uuid';
+import Items from './Items';
 import styles from './styles';
-const HomeComponent = () => {
+
+const HomeComponent = props => {
+  let StoreData = props.Expense;
+  // const [data, setData] = useState(StoreData);
+  const key = useCallback(() => uuidv4(), []);
   const navigation = useNavigation();
   const onPressHandle = useCallback(() => {
     navigation.navigate('Add Expense');
   }, [navigation]);
+
+  // useEffect(() => {
+  //   //last 3 transection
+  //   var i,
+  //     j,
+  //     temparray,
+  //     chunk = 3;
+  //   for (i = 0, j = StoreData.length; i < j; i += chunk) {
+  //     temparray = StoreData.slice(i, i + chunk);
+  //     setData(temparray);
+  //     return;
+  //   }
+  // }, [StoreData]);
+
+  const renderItem = useCallback(({item}) => <Items item={item} />, [
+    StoreData,
+  ]);
+
   return (
     <>
       <View style={styles.homeContainer}>
         <Text style={styles.text}>Total Expense</Text>
-        <Text style={styles.BDT}>$ 250 BDT</Text>
+        <Text style={styles.BDT}>$ {props.TotalAmount} BDT</Text>
       </View>
-      <View style={styles.hr}></View>
-
-      <ScrollView>
-        {/* ---------------expense------------- */}
-        <View style={styles.expense}>
-          <View style={styles.circle}>
-            <Image
-              style={styles.img}
-              source={require('../../utills/images/circle.png')}
-            />
-          </View>
-          <View style={styles.textGroup}>
-            <Text style={styles.rent}>House Rent</Text>
-            <Text style={styles.amount}>25 jan 2021</Text>
-          </View>
-          <View style={styles.balance}>
-            <Text style={styles.amount}>BDT 25000</Text>
-          </View>
-        </View>
-        <View style={styles.hr}></View>
-        {/* .............button----------- */}
-        <View style={styles.expenseButton}>
-          <TouchableOpacity onPress={onPressHandle}>
-            <Text style={styles.button}>Add Expense</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+      {StoreData.length === 0 && <View style={styles.hr}></View>}
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={StoreData}
+        renderItem={renderItem}
+        keyExtractor={key}
+      />
+      {/* <TouchableOpacity style={styles.viewMoreContainer} onPress={null}>
+        <Text style={styles.viewMore}>View More</Text>
+      </TouchableOpacity> */}
+      <View style={styles.expenseButton}>
+        <TouchableOpacity onPress={onPressHandle}>
+          <Text style={styles.button}>Add Expense</Text>
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
 
-export default HomeComponent;
+const mapStateToProps = state => {
+  const TotalAmount = state.ExpenseReducer.totalAmount;
+  const Expense = state.ExpenseReducer.expense;
+  return {
+    TotalAmount,
+    Expense,
+  };
+};
+
+export default connect(mapStateToProps)(HomeComponent);
