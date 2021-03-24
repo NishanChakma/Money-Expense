@@ -11,31 +11,36 @@ const AllExpenseComponent = props => {
   const [data, setNewData] = useState(props.Expense);
   const key = () => uuidv4();
   const renderItem = useCallback(({item}) => <Items item={item} />, [data]);
+
   // -------------------date time start-------------
   const [startTimeStamp, setstartTimeStamp] = useState(0);
   const [endTimeStamp, setEndTimeStamp] = useState(0);
-  const [selectBox, setSelectBox] = useState(0);
+  const [selectBox, setSetBox] = useState(0); //show date time
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState(0);
   const [show, setShow] = useState(false);
-
-  const showDatepicker = useCallback(
-    param => {
-      param === 0 ? setSelectBox(0) : setSelectBox(1);
-      setShow(true);
-    },
-    [selectBox, show],
-  );
-
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate ? selectedDate : new Date();
+    const currentDate = selectedDate ? selectedDate : date;
     let timestamp = moment(currentDate).unix();
-    selectBox === 0 ? setstartTimeStamp(timestamp) : setEndTimeStamp(timestamp);
     setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    selectBox === 0 ? setstartTimeStamp(timestamp) : setEndTimeStamp(timestamp);
   };
-
+  const showMode = currentMode => {
+    setShow(true);
+    setMode(currentMode);
+  };
+  const showDatepicker = param => {
+    param === 0 ? setSetBox(0) : setSetBox(1);
+    showMode('date');
+  };
   // -------------------date time end-------------
 
   //filter task is in here
   const filterData = () => {
+    if (startTimeStamp > endTimeStamp) {
+      alert("Invalid input! Start date can't be smaller than end date");
+    }
     if (startTimeStamp != 0 && endTimeStamp != 0) {
       let newData = props.Expense.filter(res => {
         if (res.timeStamp > startTimeStamp && endTimeStamp > res.timeStamp) {
@@ -45,6 +50,7 @@ const AllExpenseComponent = props => {
       setNewData(newData);
     }
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.selectBox}>
@@ -86,8 +92,8 @@ const AllExpenseComponent = props => {
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={new Date()}
-          mode={'date'}
+          value={date}
+          mode={mode}
           is24Hour={true}
           display="default"
           onChange={onChange}
