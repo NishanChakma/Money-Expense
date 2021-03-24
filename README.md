@@ -20,7 +20,7 @@ redux saga for flow action
 
 redux thunk for async action
 
-redux persist to save data in localstorage and not to use multiple key to save data
+redux persist to save data into localstorage and not to use multiple key to save data
 
 Splash Screen
 
