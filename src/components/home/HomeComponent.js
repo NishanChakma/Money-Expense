@@ -33,6 +33,7 @@ const HomeComponent = props => {
   ]);
 
   return (
+    // <ScrollView>
     <>
       <View style={styles.homeContainer}>
         <Text style={styles.text}>Total Expense</Text>
@@ -53,6 +54,7 @@ const HomeComponent = props => {
           <Text style={styles.button}>Add Expense</Text>
         </TouchableOpacity>
       </View>
+      {/* </ScrollView> */}
     </>
   );
 };
