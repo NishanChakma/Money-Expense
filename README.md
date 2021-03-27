@@ -32,7 +32,7 @@ Project Icon
 
 #Future Plan:
 
-Edit and delete data
+Edit data
 
 User authentication
 
