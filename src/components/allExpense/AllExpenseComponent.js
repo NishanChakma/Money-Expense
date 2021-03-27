@@ -56,8 +56,12 @@ const AllExpenseComponent = props => {
   //filter task is in here
   const filterData = () => {
     Keyboard.dismiss;
-    if (startTimeStamp > endTimeStamp) {
-      alert("Invalid input! Start date can't be smaller than end date");
+    if (
+      startTimeStamp > endTimeStamp ||
+      startTimeStamp === 0 ||
+      endTimeStamp === 0
+    ) {
+      alert('Invalid input!');
     }
     if (startTimeStamp != 0 && endTimeStamp != 0) {
       let newData = props.Expense.filter(res => {
