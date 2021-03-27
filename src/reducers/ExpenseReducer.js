@@ -20,6 +20,12 @@ const ExpenseReducer = (state = initialState, action) => {
         expense: action.params,
         loading: false,
       };
+    case actionType.DELETE_TRANSECTION:
+      return {
+        ...state,
+        expense: action.params,
+        loading: false,
+      };
     default: {
       return state;
     }

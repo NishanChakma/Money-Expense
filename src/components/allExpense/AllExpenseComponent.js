@@ -1,5 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+import {View, Text, TouchableOpacity, FlatList, Keyboard} from 'react-native';
+import {totalAmount, deleteTransection} from '../../actions/ExpenseActions';
 import styles from './styles';
 import {connect} from 'react-redux';
 import {v4 as uuidv4} from 'uuid';
@@ -8,9 +9,25 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 
 const AllExpenseComponent = props => {
-  const [data, setNewData] = useState(props.Expense);
+  const OriginData = props.Expense;
+  const [StoreData, SetStoreData] = useState([]);
+  useEffect(() => SetStoreData(OriginData), [OriginData]);
+
+  // -----------FlatList render item----------
   const key = () => uuidv4();
-  const renderItem = useCallback(({item}) => <Items item={item} />, [data]);
+  const renderItem = useCallback(
+    ({item, index}) => (
+      <Items
+        item={item}
+        data={StoreData}
+        totalAmount={totalAmount}
+        deleteTransection={deleteTransection}
+        dispatch={props.dispatch}
+        index={index}
+      />
+    ),
+    [StoreData],
+  );
 
   // -------------------date time start-------------
   const [startTimeStamp, setstartTimeStamp] = useState(0);
@@ -38,6 +55,7 @@ const AllExpenseComponent = props => {
 
   //filter task is in here
   const filterData = () => {
+    Keyboard.dismiss;
     if (startTimeStamp > endTimeStamp) {
       alert("Invalid input! Start date can't be smaller than end date");
     }
@@ -47,20 +65,20 @@ const AllExpenseComponent = props => {
           return res;
         }
       });
-      setNewData(newData);
+      SetStoreData(newData);
     }
   };
 
   //reset all
   const resetAll = useCallback(() => {
-    setNewData(props.Expense);
+    SetStoreData(OriginData);
     setstartTimeStamp(0);
     setEndTimeStamp(0);
     setSetBox(0);
     setDate(new Date());
     setMode(0);
     setShow(false);
-  }, [data, startTimeStamp, endTimeStamp, selectBox, date, mode, show]);
+  }, [startTimeStamp, endTimeStamp, selectBox, date, mode, show]);
 
   return (
     <View style={styles.container}>
@@ -85,16 +103,15 @@ const AllExpenseComponent = props => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.selectBoxInsideSmall}
+          accessible={false}
           onPress={filterData}>
           <Text style={[styles.text, {backgroundColor: 'red'}]}>Filter</Text>
         </TouchableOpacity>
       </View>
-      {data.length === 0 && (
-        <Text style={styles.noData}>No data between these days</Text>
-      )}
+      {StoreData.length === 0 && <Text style={styles.noData}>No data</Text>}
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={data}
+        data={StoreData}
         renderItem={renderItem}
         keyExtractor={key}
       />

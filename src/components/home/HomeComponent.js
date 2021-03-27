@@ -1,5 +1,6 @@
 import React, {useCallback} from 'react';
 import {View, Text, TouchableOpacity, FlatList, ScrollView} from 'react-native';
+import {totalAmount, deleteTransection} from '../../actions/ExpenseActions';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {v4 as uuidv4} from 'uuid';
@@ -7,19 +8,26 @@ import Items from './Items';
 import styles from './styles';
 
 const HomeComponent = props => {
-  let StoreData = props.Expense;
-  const key = () => uuidv4();
+  const StoreData = props.Expense;
   const navigation = useNavigation();
   const onPressHandle = useCallback(() => {
     navigation.navigate('Add Expense');
   }, [navigation]);
-
-  const renderItem = useCallback(({item}) => <Items item={item} />, [
-    StoreData,
-  ]);
-
+  const key = () => uuidv4();
+  const renderItem = useCallback(
+    ({item, index}) => (
+      <Items
+        item={item}
+        data={StoreData}
+        totalAmount={totalAmount}
+        deleteTransection={deleteTransection}
+        dispatch={props.dispatch}
+        index={index}
+      />
+    ),
+    [StoreData],
+  );
   return (
-    // <ScrollView>
     <>
       <View style={styles.homeContainer}>
         <Text style={styles.text}>Total Expense</Text>
@@ -37,7 +45,6 @@ const HomeComponent = props => {
           <Text style={styles.button}>Add Expense</Text>
         </TouchableOpacity>
       </View>
-      {/* </ScrollView> */}
     </>
   );
 };

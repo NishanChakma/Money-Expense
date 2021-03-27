@@ -3,7 +3,6 @@ import actionType from '../../constants';
 
 export const totalAmount = function* (action) {
   try {
-    // yield put //<-----------------check
     ({
       type: actionType.TOTAL_AMOUNT,
       param: action.param,
@@ -15,12 +14,22 @@ export const totalAmount = function* (action) {
 
 export const addTransection = function* (action) {
   try {
-    // yield put //<-----------------check
     ({
       type: actionType.ADD_TRANSECTION,
       param: action.params,
     });
   } catch (error) {
     console.log('New expense is not added', error);
+  }
+};
+
+export const deleteTransection = function* (action) {
+  try {
+    ({
+      type: actionType.DELETE_TRANSECTION,
+      param: action.params,
+    });
+  } catch (error) {
+    console.log('Transection is not deleted', error);
   }
 };

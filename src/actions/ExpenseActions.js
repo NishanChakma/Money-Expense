@@ -13,3 +13,10 @@ export const addTransection = params => {
     params: params,
   };
 };
+
+export const deleteTransection = params => {
+  return {
+    type: actionType.DELETE_TRANSECTION,
+    params: params,
+  };
+};

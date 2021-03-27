@@ -12,7 +12,6 @@ import styles from './styles';
 import moment from 'moment';
 import {totalAmount, addTransection} from '../../actions/ExpenseActions';
 import {connect} from 'react-redux';
-// import Loader from '../Loader';
 import {useNavigation} from '@react-navigation/native';
 
 const AddExpenseComponent = props => {
@@ -62,8 +61,8 @@ const AddExpenseComponent = props => {
         timeStamp: timeStamp,
       };
       const newTransection = [...props.Expense, expenseArray];
-      await props.dispatch(totalAmount(finalExpense)); //<-----------------check
-      await props.dispatch(addTransection(newTransection)); //<------------check
+      await props.dispatch(totalAmount(finalExpense));
+      await props.dispatch(addTransection(newTransection));
       navigation.navigate('Home');
     }
   }, [timeStamp, value, price, showScreen, props.TotalAmount, props.Expense]);
