@@ -8,6 +8,15 @@ const styles = StyleSheet.create({
     padding: 40,
     margin: 20,
     borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+
+    elevation: 24,
   },
   text: {
     color: '#fff',
@@ -23,6 +32,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 10,
   },
+  addData: {
+    marginTop: 100,
+    textAlign: 'center',
+    fontSize: 25,
+    color: 'red',
+  },
   expenseButton: {
     marginHorizontal: '20%',
     width: '60%',
@@ -33,6 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     textAlign: 'center',
     borderRadius: 10,
+    color: '#fff',
   },
 
   expense: {

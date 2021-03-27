@@ -1,5 +1,12 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {View, Text, TouchableOpacity, FlatList, Keyboard} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Keyboard,
+  TextInput,
+} from 'react-native';
 import {totalAmount, deleteTransection} from '../../actions/ExpenseActions';
 import styles from './styles';
 import {connect} from 'react-redux';
@@ -10,6 +17,7 @@ import moment from 'moment';
 
 const AllExpenseComponent = props => {
   const OriginData = props.Expense;
+  const [category, setCategory] = useState('');
   const [StoreData, SetStoreData] = useState([]);
   useEffect(() => SetStoreData(OriginData), [OriginData]);
 
@@ -56,26 +64,31 @@ const AllExpenseComponent = props => {
   //filter task is in here
   const filterData = () => {
     Keyboard.dismiss;
-    if (
-      startTimeStamp > endTimeStamp ||
-      startTimeStamp === 0 ||
-      endTimeStamp === 0
-    ) {
-      alert('Invalid input!');
-    }
-    if (startTimeStamp != 0 && endTimeStamp != 0) {
-      let newData = props.Expense.filter(res => {
-        if (res.timeStamp > startTimeStamp && endTimeStamp > res.timeStamp) {
-          return res;
-        }
-      });
+    if (startTimeStamp != 0 && endTimeStamp != 0 && category === '') {
+      let newData = props.Expense.filter(
+        res => res.timeStamp > startTimeStamp && endTimeStamp > res.timeStamp,
+      );
       SetStoreData(newData);
+    } else if (category !== '' && startTimeStamp === 0 && endTimeStamp === 0) {
+      let newData = props.Expense.filter(res => res.category === category);
+      SetStoreData(newData);
+    } else if (startTimeStamp != 0 && endTimeStamp != 0 && category !== '') {
+      let newData = props.Expense.filter(
+        res =>
+          res.timeStamp > startTimeStamp &&
+          endTimeStamp > res.timeStamp &&
+          res.category === category,
+      );
+      SetStoreData(newData);
+    } else {
+      alert('Invalid input!');
     }
   };
 
   //reset all
   const resetAll = useCallback(() => {
     SetStoreData(OriginData);
+    setCategory('');
     setstartTimeStamp(0);
     setEndTimeStamp(0);
     setSetBox(0);
@@ -105,11 +118,20 @@ const AllExpenseComponent = props => {
               : 'Select End Date'}
           </Text>
         </TouchableOpacity>
+      </View>
+      <Text style={styles.or}>or</Text>
+      <View style={styles.selectBox2}>
+        <TextInput
+          style={styles.input}
+          onChangeText={val => setCategory(val)}
+          value={category}
+          placeholder="Enter category name"
+        />
         <TouchableOpacity
           style={styles.selectBoxInsideSmall}
           accessible={false}
           onPress={filterData}>
-          <Text style={[styles.text, {backgroundColor: 'red'}]}>Filter</Text>
+          <Text style={[styles.text, styles.filter]}>Filter</Text>
         </TouchableOpacity>
       </View>
       {StoreData.length === 0 && <Text style={styles.noData}>No data</Text>}
@@ -119,7 +141,6 @@ const AllExpenseComponent = props => {
         renderItem={renderItem}
         keyExtractor={key}
       />
-
       <TouchableOpacity onPress={resetAll} style={styles.button}>
         <Text style={styles.reset}>Reset</Text>
       </TouchableOpacity>

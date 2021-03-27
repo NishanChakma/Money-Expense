@@ -33,7 +33,12 @@ const HomeComponent = props => {
         <Text style={styles.text}>Total Expense</Text>
         <Text style={styles.BDT}>$ {props.TotalAmount} BDT</Text>
       </View>
-      {StoreData.length === 0 && <View style={styles.hr}></View>}
+      {StoreData.length === 0 && (
+        <>
+          <View style={styles.hr}></View>
+          <Text style={styles.addData}>Add Some data</Text>
+        </>
+      )}
       <FlatList
         showsVerticalScrollIndicator={false}
         data={StoreData}

@@ -9,19 +9,35 @@ const styles = StyleSheet.create({
   selectBox: {
     flexDirection: 'row',
     width: '100%',
+    marginBottom: 10,
+  },
+  selectBox2: {
+    flexDirection: 'row',
+    width: '90%',
+    marginHorizontal: '5%',
     marginBottom: 20,
+    alignItems: 'center',
+  },
+  input: {
+    width: '60%',
+    borderBottomColor: 'gray',
+    borderBottomWidth: 1,
   },
   selectBoxInside: {
-    width: '40%',
+    width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   selectBoxInsideSmall: {
-    width: '20%',
+    width: '40%',
     justifyContent: 'center',
     alignItems: 'center',
   },
-
+  filter: {
+    paddingHorizontal: 30,
+    backgroundColor: '#CC0000',
+    alignSelf: 'flex-end',
+  },
   text: {
     paddingVertical: 10,
     paddingHorizontal: 10,
@@ -46,11 +62,14 @@ const styles = StyleSheet.create({
   },
   reset: {
     backgroundColor: '#cc0202',
-    paddingHorizontal: 20,
+    paddingHorizontal: 100,
     paddingVertical: 10,
     borderRadius: 10,
     textAlign: 'center',
     color: '#fff',
+  },
+  or: {
+    textAlign: 'center',
   },
 });
 export default styles;

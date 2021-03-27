@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 10,
     marginTop: 30,
+    color: '#fff',
   },
 });
 
