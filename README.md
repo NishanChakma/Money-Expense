@@ -6,8 +6,9 @@ User can input daily expense
 
 Show all expense
 
-Filter expense by date
+Delete multiple expense
 
+Filter expense 
 
 
 
