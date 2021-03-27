@@ -1,6 +1,6 @@
 # Money-Expense
 
-#Feature:
+# Feature:
 
 User can input daily expense
 
@@ -12,7 +12,7 @@ Filter expense by date
 
 
 
-#Uses Technology:
+# Uses Technology:
 
 redux
 
@@ -30,7 +30,7 @@ Project Icon
 
 
 
-#Future Plan:
+# Future Plan:
 
 Edit data
 
